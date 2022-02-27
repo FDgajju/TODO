@@ -4,7 +4,7 @@
   "description": "Project by Cloudesign ",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./src/app.js"
+    "start": "nodemon ./Backend/app.js"
   },
   "repository": {
     "type": "git",

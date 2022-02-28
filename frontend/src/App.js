@@ -1,3 +1,4 @@
+import Form from "./Component/Form"
 /*
 import axios from "axios";
 
@@ -12,7 +13,9 @@ fetch()
 */
 
 function App() {
-  return (<h1>Hello world</h1>);
+  return (
+    <Form/>
+  );
 }
 
 export default App;

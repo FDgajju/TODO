@@ -1,3 +1,4 @@
+const res = require("express/lib/response");
 const todoModel = require("../model/todoModel");
 
 const createTodo = async (req, res) => {
@@ -14,6 +15,16 @@ const createTodo = async (req, res) => {
     res.status(500).send({ status: false, message: err.message });
   }
 };
+
+const getTodo = async (req, res) => {
+  try{
+    const allTasks = await todoModel.find()
+    console.log(allTasks)
+    res.status(200).send({data: allTasks})
+  }catch(err) {
+    res.status(500).send({message: err})
+  }
+}
 
 const updateTodo = async (req, res) => {
   try {
@@ -35,4 +46,4 @@ const updateTodo = async (req, res) => {
   }
 };
 
-module.exports = { createTodo, updateTodo };
+module.exports = { createTodo, updateTodo, getTodo };

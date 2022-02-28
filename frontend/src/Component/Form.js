@@ -1,9 +1,157 @@
-import React from 'react'
+import React, { useState } from "react";
+import "./Form.css";
+import axios from "axios";
 
-export const Form = () => {
+let task = {
+  title: null,
+  Description: null,
+  Status: null,
+  ren: 1,
+  done: false
+};
+const Form = () => {
+  //model
+
+  const [todo, setTodo] = useState([]);
+  const [value, setValue] = useState("");
+  const [data, setData] = useState(task);
+  let { ren } = task;
+
+  function onChangeHandel(event) {
+    setValue(event.target.value.trim());
+  }
+
+  async function allTasks() {
+    const allData = await axios.get("/api/task");
+    setTodo([...allData.data.data]);
+    //   // return allData;
+  }
+  allTasks();
+
+  async function doneTask(id) {
+    const find = todo.find((el) => el._id === id);
+    await axios.put(`api/task/${find._id}`);
+    // if(!comp) 
+  }
+
+  async function btnVisible() {
+    if (ren === 1) {
+      if (value === "") return alert("title is required");
+
+      setData((task.title = value));
+      setData((task.ren += 1));
+    } else if (ren === 2) {
+      setData((task.ren += 1));
+      setData((task.Description = value));
+    } else if (ren === 3) {
+      let x = document.getElementById("Status").value;
+      setData((task.Status = x));
+
+      await axios.post("/api/task", task);
+      setData((task.ren += ren));
+    }
+  }
+  console.log(todo);
   return (
-    <div>Form</div>
-  )
-}
+    <div className="main">
+      <div className="container">
+        <h1>TASK</h1>
+        {todo.map(
+          (data) =>
+            (data.Status === "Open" || data.Status === "In-Progress") && (
+              <div className="task">
+                <span className="elem">{data.title.toUpperCase()}</span>
+                <span className="elemD">{data.Description.toUpperCase()}</span>
+                <button className="compBtn" onClick={() => doneTask(data._id)}>
+                  Compleat
+                </button>
+              </div>
+            )
+        )}
+        {/* Form */}
+        <form id="form">
+          {ren === 1 && (
+            <div className="input">
+              <input
+                id="title"
+                className="in"
+                type="text"
+                placeholder="  Add Task Title Here 📝"
+                onChange={onChangeHandel}
+              />
+              <button className="inBtn" type="submit" onClick={btnVisible}>
+                {" "}
+                <span className="bn"> Title </span>
+              </button>
+            </div>
+          )}
 
-export default Form
+          {ren === 2 && (
+            <div className="input">
+              {
+                <input
+                  id="Description"
+                  className="in"
+                  type="text"
+                  placeholder="  Add Description for task 📝"
+                  onChange={onChangeHandel}
+                />
+              }
+              <button className="inBtn" type="submit" onClick={btnVisible}>
+                {" "}
+                <span className="bn"> Description </span>{" "}
+              </button>
+            </div>
+          )}
+
+          {ren === 3 && (
+            <div className="input">
+              {
+                <select name="task-status" id="Status" className="in">
+                  <option value="Open" onChange={onChangeHandel}>
+                    Open
+                  </option>
+                  <option value="In-Progress">In-Progress</option>
+                  <option value="Completed"> Completed</option>
+                </select>
+                /*<input
+                  id="Status"
+                  className="in"
+                  type="text"
+                  placeholder=" Status! "
+                  onChange={onChangeHandel}
+                />*/
+              }
+              <button className="inBtn" type="submit" onClick={btnVisible}>
+                {" "}
+                <span className="bn"> submit </span>{" "}
+              </button>
+            </div>
+          )}
+
+          {/*<button id="suBtn" type="submit" >
+            <span className="bn"> Submit </span>
+          </button>*/}
+        </form>
+      </div>
+
+      {/* Done Task */}
+      <div className="DONE">
+        <h1>Done</h1>
+
+        {todo.map(
+          (data) =>
+            data.Status === "Completed" && (
+              <div className="task">
+                <span className="elem">{"✅  " + data.title.toUpperCase() }</span>
+                <span className="elemD">{data.Description.toUpperCase()}</span>
+                <button className="compBtn" onClick={() => doneTask(data._id)}>Undo</button>
+              </div>
+            )
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Form;

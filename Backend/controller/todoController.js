@@ -17,14 +17,13 @@ const createTodo = async (req, res) => {
 };
 
 const getTodo = async (req, res) => {
-  try{
-    const allTasks = await todoModel.find()
-    console.log(allTasks)
-    res.status(200).send({data: allTasks})
-  }catch(err) {
-    res.status(500).send({message: err})
+  try {
+    const allTasks = await todoModel.find();
+    res.status(200).send({ data: allTasks });
+  } catch (err) {
+    res.status(500).send({ message: err });
   }
-}
+};
 
 const updateTodo = async (req, res) => {
   try {
@@ -46,4 +45,45 @@ const updateTodo = async (req, res) => {
   }
 };
 
-module.exports = { createTodo, updateTodo, getTodo };
+const undoTask = async (req, res) => {
+  try {
+    const { params } = req;
+    const { id } = params;
+
+    await todoModel.findOneAndUpdate(
+      { _id: id },
+      { Status: "Open" },
+      { new: true }
+    );
+    const doneTasks = await todoModel.find({ Status: "Open" });
+
+    res
+      .status(200)
+      .send({ status: "DONE", message: "task Completed", data: doneTasks });
+  } catch (err) {
+    res.status(500).send({ status: false, message: err.message });
+  }
+};
+
+const editTask = async (req, res) => {
+  try {
+    const { params, body } = req;
+    const { id } = params;
+    const { title, Description, Status } = body;
+
+    await todoModel.findOneAndUpdate(
+      { _id: id },
+      body,
+      { new: true }
+    );
+    const doneTasks = await todoModel.find({ Status: "Open" });
+
+    res
+      .status(200)
+      .send({ status: "DONE", message: "task Completed", data: doneTasks });
+  } catch (err) {
+    res.status(500).send({ status: false, message: err.message });
+  }
+};
+
+module.exports = { createTodo, updateTodo, getTodo, undoTask, editTask };

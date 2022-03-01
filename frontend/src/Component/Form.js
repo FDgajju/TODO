@@ -7,7 +7,7 @@ let task = {
   Description: null,
   Status: null,
   ren: 1,
-  done: false
+  // isEditable: false
 };
 const Form = () => {
   //model
@@ -31,7 +31,18 @@ const Form = () => {
   async function doneTask(id) {
     const find = todo.find((el) => el._id === id);
     await axios.put(`api/task/${find._id}`);
-    // if(!comp) 
+  }
+
+  async function undoTask(id) {
+    const find = todo.find((el) => el._id === id);
+    await axios.put(`api/task/undo/${find._id}`);
+  }
+
+  async function editTask(id){
+    let find = todo.find(elm => elm._id === id)
+    find["isEditable"] = true
+    setTodo([...todo])
+    console.log(todo)
   }
 
   async function btnVisible() {
@@ -51,7 +62,7 @@ const Form = () => {
       setData((task.ren += ren));
     }
   }
-  console.log(todo);
+
   return (
     <div className="main">
       <div className="container">
@@ -60,11 +71,12 @@ const Form = () => {
           (data) =>
             (data.Status === "Open" || data.Status === "In-Progress") && (
               <div className="task">
-                <span className="elem">{data.title.toUpperCase()}</span>
+                <span contentEditable={data.isEditable} className="elem">{data.title.toUpperCase()}</span>
                 <span className="elemD">{data.Description.toUpperCase()}</span>
                 <button className="compBtn" onClick={() => doneTask(data._id)}>
-                  Compleat
+                  Complete
                 </button>
+                <button className="compBtn editB" onClick={() => editTask(data._id)}>Edit</button>
               </div>
             )
         )}
@@ -145,7 +157,7 @@ const Form = () => {
               <div className="task">
                 <span className="elem">{"✅  " + data.title.toUpperCase() }</span>
                 <span className="elemD">{data.Description.toUpperCase()}</span>
-                <button className="compBtn" onClick={() => doneTask(data._id)}>Undo</button>
+                <button className="compBtn" onClick={() => undoTask(data._id)}> Undo </button>
               </div>
             )
         )}

@@ -19,10 +19,21 @@ body {
 
 .container,
 .DONE {
-  /* border: 2px solid #555; */
-  width: 50%;
+  border: 1px solid #555;
+  width: 40%;
   /* height: 90vh; */
   margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+}
+
+.container {
+  background-color: rgb(172, 172, 172);
+}
+
+.DONE {
+  background-color: rgb(172, 172, 172);
 }
 
 /* .done{
@@ -37,13 +48,13 @@ form {
   height: 30%;
 }
 
-h1{
+h1 {
   text-align: center;
   justify-content: center;
   /* border: 2px solid; */
 }
 
-.input{
+.input {
   /* border: 2px solid; */
   width: 80%;
   /* position: absolute;
@@ -52,6 +63,7 @@ h1{
   text-align: center;
   justify-content: center;
   margin: auto;
+  margin-top: 2%;
 }
 
 .in {
@@ -66,8 +78,8 @@ h1{
   margin-left: 100%;
   text-align: center;
   justify-content: center;
-  width: 15%;
-  margin: auto;  
+  width: 20%;
+  margin: auto;
   margin-top: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -79,7 +91,7 @@ h1{
   text-align: center;
   justify-content: center;
   width: 8%;
-  margin: auto;  
+  margin: auto;
   margin-top: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -89,7 +101,7 @@ h1{
   border: 1px solid;
   position: absolute;
   top: 90%;
-  left: 50%
+  left: 50%;
 }
 
 .elem {
@@ -99,30 +111,48 @@ h1{
   top: 15%;
 }
 
-.elemD{
+.elem,
+.elemD {
+  color: rgb(196, 196, 196);
+  text-shadow: 0 1px 1px #000
+}
+
+.elemD {
   justify-content: center;
   text-align: center;
   font-size: 50%;
+  color: white;
 }
 
 .compBtn {
+  background-color: rgb(204, 204, 204);
   top: 10%;
   position: absolute;
   right: 2%;
+  border: 0;
+  border-radius: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.editB {
+  position: absolute;
+  right: 18%;
 }
 
 .task {
-  width: 70%;
-  border: 1px solid #555;
+  background-color: rgb(134, 134, 134);
+  width: 80%;
+  /* border: 1px solid #555; */
   border-radius: 3px;
   justify-content: center;
   text-align: center;
   margin: auto;
   margin-top: 1%;
+  margin-bottom: 1%;
   position: relative;
 }
 
-.con2{
+.con2 {
   display: flex;
 }
-

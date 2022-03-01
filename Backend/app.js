@@ -1,11 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const dotEnv = require("dotenv");
+// const dotEnv = require("dotenv");
 const app = express();
 
 const router = require("./router/route");
 
-dotEnv.config({ path: `${__dirname}/../config.env` });
+// dotEnv.config({ path: `${__dirname}/../config.env` });
 
 app.use(express.json());
 

@@ -1,11 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-// const dotEnv = require("dotenv");
+const dotEnv = require("dotenv");
 const app = express();
 
 const router = require("./router/route");
 
-// dotEnv.config({ path: `${__dirname}/../config.env` });
+dotEnv.config({ path: `${__dirname}/../config.env` });
 
 app.use(express.json());
 
@@ -17,7 +17,7 @@ mongoose.connect(DB).then(() => {
 
 app.use("/api/task", router)
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 app.listen(port, () => {
   console.log(`Express is running on port ${port}`);
 });
